@@ -1,13 +1,6 @@
-import sys
-from pathlib import Path
-import timeit
-from datetime import timedelta
-from itertools import combinations_with_replacement, permutations
+from itertools import permutations
 
-sys.path.append("./")
-sys.path.append("../")
-from input import load_input
-from day02 import parse_input, who_wins, compute_scores, decipher_pair  # type: ignore
+from day02 import parse_input, compute_scores, decipher_pair  # type: ignore
 
 
 INPUT_S: str = """A Y

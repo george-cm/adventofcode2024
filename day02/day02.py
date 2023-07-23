@@ -1,9 +1,6 @@
-import sys
 from pathlib import Path
 
-sys.path.append("../")
-from input import load_input
-
+from adventofcode2022.common import load_input
 
 INPUT_S: str = load_input(Path("input.txt"))
 
