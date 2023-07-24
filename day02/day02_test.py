@@ -11,9 +11,9 @@ C Z
 
 def main() -> None:
     msg: str = "TESTING Part1"
-    print(f"\n{'=' * len(msg)}\n")
+    print(f"\n{'=' * len(msg)}")
     print(msg)
-    print(f"\n{'-' * len(msg)}\n")
+    print(f"{'-' * len(msg)}")
 
     lines: list[str] = parse_input(INPUT_S)
     scores: list[int] = compute_scores(lines)
@@ -21,6 +21,12 @@ def main() -> None:
     print(lines)
     print(scores)
     print(part1_score)
+
+    msg = "TESTING Part2"
+    print(f"\n{'=' * len(msg)}")
+    print(msg)
+    print(f"{'-' * len(msg)}")
+
     decipherd_pairs: list[str] = [decipher_pair(pair) for pair in lines]
     print(decipherd_pairs)
     deciphered_scores: list[int] = compute_scores(decipherd_pairs)
