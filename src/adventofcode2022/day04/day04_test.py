@@ -18,17 +18,20 @@ sys.modules["solutions"] = module
 from solutions import solve_part1, solve_part2  # type: ignore  # noqa: E402
 
 
-INPUT_S: str = """"""
+INPUT_S: str = """2-4,6-8
+2-3,4-5
+5-7,7-9
+2-8,3-7
+6-6,4-6
+2-6,4-8"""
 
 
-def test_sove_part1() -> None:
-    # assert solve_part1(INPUT_S) ==
-    ...
+def test_solve_part1() -> None:
+    assert solve_part1(INPUT_S) == 2
 
 
 def test_solve_part2() -> None:
-    # assert solve_part2(INPUT_S) ==
-    ...
+    assert solve_part2(INPUT_S) == 4
 
 
 if __name__ == "__main__":

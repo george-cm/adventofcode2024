@@ -17,11 +17,17 @@ def decipher_pair(pair: str) -> str:
     player2_choice: int = 0
     match pair[1]:
         case "X":
-            player2_choice = player1_choice - (THRESHOLD // (1 - ((1 // OPTIONS_COUNT) * OPTIONS_COUNT)))
+            player2_choice = player1_choice - (
+                THRESHOLD // (1 - ((1 // OPTIONS_COUNT) * OPTIONS_COUNT))
+            )
         case "Y":
             player2_choice = player1_choice
         case "Z":
-            player2_choice = player1_choice - (THRESHOLD // (1 - ((1 // OPTIONS_COUNT) * OPTIONS_COUNT))) - 1
+            player2_choice = (
+                player1_choice
+                - (THRESHOLD // (1 - ((1 // OPTIONS_COUNT) * OPTIONS_COUNT)))
+                - 1
+            )
     assert player2_choice < OPTIONS_COUNT
     return f"{pair[0]}{HUMAN_CHOICES[player2_choice]}"
 

@@ -8,7 +8,6 @@ INPUT_S: str = load_input(Path(__file__).parent / "input.txt")
 
 
 def get_calories(input_s: str) -> list[int]:
-
     calories: list[int] = []
 
     running_calories = 0
