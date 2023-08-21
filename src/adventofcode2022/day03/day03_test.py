@@ -1,7 +1,7 @@
-from importlib.machinery import ModuleSpec
-from pathlib import Path
 import sys
 from importlib import util
+from importlib.machinery import ModuleSpec
+from pathlib import Path
 from types import ModuleType
 
 import pytest
@@ -15,8 +15,8 @@ module: ModuleType = util.module_from_spec(spec)  # type: ignore
 spec.loader.exec_module(module)  # type: ignore
 sys.modules["solutions"] = module
 
-from solutions import solve_part1, solve_part2, calculate_priority  # type: ignore  # noqa: E402
-
+from solutions import calculate_priority  # type: ignore  # noqa: E402
+from solutions import solve_part1, solve_part2
 
 INPUT_S: str = """vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL

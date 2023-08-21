@@ -1,7 +1,7 @@
-from importlib.machinery import ModuleSpec
-from pathlib import Path
 import sys
 from importlib import util
+from importlib.machinery import ModuleSpec
+from pathlib import Path
 from types import ModuleType
 
 import pytest
@@ -16,7 +16,6 @@ spec.loader.exec_module(module)  # type: ignore
 sys.modules["solutions"] = module
 
 from solutions import solve_part1, solve_part2  # type: ignore  # noqa: E402
-
 
 INPUT_S: str = """2-4,6-8
 2-3,4-5

@@ -17,17 +17,23 @@ sys.modules["solutions"] = module
 
 from solutions import solve_part1, solve_part2  # type: ignore  # noqa: E402
 
-INPUT_S: str = """"""
+INPUT_S: str = """    [D]    
+[N] [C]    
+[Z] [M] [P]
+ 1   2   3 
+
+move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2"""
 
 
 def test_sove_part1() -> None:
-    # assert solve_part1(INPUT_S) ==
-    ...
+    assert solve_part1(INPUT_S) == "CMZ"
 
 
 def test_solve_part2() -> None:
-    # assert solve_part2(INPUT_S) ==
-    ...
+    assert solve_part2(INPUT_S) == "MCD"
 
 
 if __name__ == "__main__":

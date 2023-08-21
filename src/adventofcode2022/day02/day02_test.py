@@ -1,7 +1,6 @@
 from itertools import permutations
 
-from day02 import parse_input, compute_scores, decipher_pair  # type: ignore
-
+from day02 import compute_scores, decipher_pair, parse_input  # type: ignore
 
 INPUT_S: str = """A Y
 B X
