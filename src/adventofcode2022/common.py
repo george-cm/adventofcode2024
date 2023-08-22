@@ -16,7 +16,7 @@ def create_day(day: int) -> None:
     new_day_file_name_template = Template(day_file.name)
     day_str = f"{day:02d}"
     new_day_file_name = f"{new_day_file_name_template.substitute(day=day_str)}"
-    new_day_fld = base_path / f"day{day_str}"
+    new_day_fld = base_path.parent.parent / f"day{day_str}"
 
     if new_day_fld.exists():
         raise OSError("Folder exists: '%s'" % new_day_fld)
@@ -38,6 +38,9 @@ def create_day(day: int) -> None:
 
     with day_test_file.open("r", encoding="utf-8") as f:
         new_day_test_file_content = f.read()
+        new_day_test_file_content = Template(new_day_test_file_content).substitute(
+            day=day_str
+        )
 
     new_day_test_file = new_day_fld / new_day_test_file_name
     with new_day_test_file.open("w", encoding="utf-8") as f:
@@ -45,6 +48,8 @@ def create_day(day: int) -> None:
 
     new_day_problem_statement_file = new_day_fld / f"problem_day{day_str}.txt"
     new_day_problem_statement_file.write_text("")
+
+    (new_day_fld / "input.txt").write_text("")
 
 
 def main():
