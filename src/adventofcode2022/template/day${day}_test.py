@@ -6,7 +6,7 @@ from day${day} import solve_part1, solve_part2  # type: ignore  # noqa: E402
 INPUT_S: str = """"""
 
 
-def test_sove_part1() -> None:
+def test_solve_part1() -> None:
     # assert solve_part1(INPUT_S) ==
     ...
 

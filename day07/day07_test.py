@@ -1,6 +1,7 @@
 import sys
 
 import pytest
+
 from day07 import solve_part1, solve_part2  # type: ignore  # noqa: E402
 
 INPUT_S: str = """"""
