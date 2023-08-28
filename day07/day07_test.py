@@ -1,5 +1,3 @@
-import sys
-
 import pytest
 
 from day07 import solve_part1, solve_part2  # type: ignore  # noqa: E402
@@ -26,27 +24,7 @@ $ ls
 4060174 j
 8033020 d.log
 5626152 d.ext
-7214296 k
-"""
-
-tree = {
-    "/": {
-        "a": {
-            "e": {"i": 584},
-            "f": 29116,
-            "g": 2557,
-            "h.lst": 62596,
-        },
-        "b.txt": 14848514,
-        "c.dat": 8504156,
-        "d": {
-            "j": 4060174,
-            "d.log": 8033020,
-            "d.ext": 5626152,
-            "k": 7214296,
-        },
-    }
-}
+7214296 k"""
 
 
 def test_solve_part1() -> None:

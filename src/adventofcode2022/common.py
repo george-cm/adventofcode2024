@@ -33,12 +33,14 @@ def create_day(day: int) -> None:
     day_test_file = base_path / "template/day${day}_test.py"
     new_day_test_file_name_template = Template(day_test_file.name)
     new_day_test_file_name = (
-        f"{new_day_test_file_name_template.substitute(day=day_str)}")
+        f"{new_day_test_file_name_template.substitute(day=day_str)}"
+    )
 
     with day_test_file.open("r", encoding="utf-8") as f:
         new_day_test_file_content = f.read()
-        new_day_test_file_content = Template(
-            new_day_test_file_content).substitute(day=day_str)
+        new_day_test_file_content = Template(new_day_test_file_content).substitute(
+            day=day_str
+        )
 
     new_day_test_file = new_day_fld / new_day_test_file_name
     with new_day_test_file.open("w", encoding="utf-8") as f:
@@ -53,8 +55,7 @@ def create_day(day: int) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(
         prog="adventofcode2022",
-        description=
-        "create the files needed to work on a certain Advent of Code problem",
+        description="create the files needed to work on a certain Advent of Code problem",
     )
     parser.add_argument(
         "day",
