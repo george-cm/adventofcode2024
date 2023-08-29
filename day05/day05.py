@@ -15,28 +15,25 @@ class Instruction(NamedTuple):
 def parse_input(inputs: str) -> tuple[list[list[str]], list[Instruction]]:
     lines: list[str] = inputs.splitlines()
     stacks: list[list[str]] = []
-    instructions: list[namedtuple["move", "from", "to"]] = []
+    instructions: list[Instruction] = []
     passed_stacks: bool = False
     stack_count: int = 0
     for line in lines:
-        # breakpoint()
-        if line.strip() == "":
-            passed_stacks = True
+        if not passed_stacks and line.strip():
+            if stack_count == 0:
+                stack_count = (len(line) + 1) // 4
+                stacks.extend([] for _ in range(stack_count))
+            for i in range(1, len(line) + 1, 4):
+                if line[i].strip() != "":
+                    stacks[(i - 1) // 4].append(line[i])
+        elif passed_stacks:
+            parts = line.split(" ")
+            move = int(parts[1])
+            from_stack = int(parts[3]) - 1
+            to_stack = int(parts[5]) - 1
+            instructions.append(Instruction(move, from_stack, to_stack))
         else:
-            if not passed_stacks:
-                if stack_count == 0:
-                    stack_count = (len(line) + 1) // 4
-                    for s in range(stack_count):
-                        stacks.append(list())
-                for i in range(1, len(line) + 1, 4):
-                    if line[i].strip() != "":
-                        stacks[(i - 1) // 4].append(line[i])
-            else:
-                parts = line.split(" ")
-                move = int(parts[1])
-                from_stack = int(parts[3])
-                to_stack = int(parts[5])
-                instructions.append(Instruction(move, from_stack, to_stack))
+            passed_stacks = True
     stacks = [list(reversed(s[:-1])) for s in stacks]
     return stacks, instructions
 
@@ -45,40 +42,30 @@ def execute_instruction_part1(
     instruction: Instruction, stacks: list[list[str]]
 ) -> None:
     for _ in range(instruction.move):
-        crate = stacks[instruction.from_stack - 1].pop()
-        stacks[instruction.to_stack - 1].append(crate)
+        crate = stacks[instruction.from_stack].pop()
+        stacks[instruction.to_stack].append(crate)
 
 
 def execute_instruction_part2(
     instruction: Instruction, stacks: list[list[str]]
 ) -> None:
-    crates = stacks[instruction.from_stack - 1][-instruction.move :]
-    stacks[instruction.from_stack - 1] = stacks[instruction.from_stack - 1][
-        : -instruction.move
-    ]
-    stacks[instruction.to_stack - 1].extend(crates)
+    crates = stacks[instruction.from_stack][-instruction.move :]
+    stacks[instruction.from_stack] = stacks[instruction.from_stack][: -instruction.move]
+    stacks[instruction.to_stack].extend(crates)
 
 
-def solve_part1(inputs: str) -> int:
-    result: str = ""
-    # write code here, update rusult
+def solve_part1(inputs: str) -> str:
     stacks, instructions = parse_input(inputs)
     for instruction in instructions:
         execute_instruction_part1(instruction, stacks)
-    for stack in stacks:
-        result += stack[-1]
-    return result
+    return "".join([stack[-1] for stack in stacks])
 
 
-def solve_part2(inputs: str) -> int:
-    result: str = ""
-    # write code here, update rusult
+def solve_part2(inputs: str) -> str:
     stacks, instructions = parse_input(inputs)
     for instruction in instructions:
         execute_instruction_part2(instruction, stacks)
-    for stack in stacks:
-        result += stack[-1]
-    return result
+    return "".join([stack[-1] for stack in stacks])
 
 
 def main() -> None:

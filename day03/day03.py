@@ -23,7 +23,6 @@ def solve_part2(inputs: str) -> int:
     lines: list[str] = inputs.splitlines()
     total_priority: int = 0
     for group in (lines[i : i + 3] for i in range(0, len(lines), 3)):
-        # breakpoint()
         set_1: set[str] = set(group[0])
         set_2: set[str] = set(group[1])
         set_3: set[str] = set(group[2])
@@ -33,10 +32,8 @@ def solve_part2(inputs: str) -> int:
 
 
 def calculate_priority(c: str) -> int:
-    # breakpoint()
-    if c < "a":
-        return ord(c) - ord("A") + 27
-    return ord(c) - ord("a") + 1
+    result: int = ord(c) - ord("A") + 27 if c < "a" else ord(c) - ord("a") + 1
+    return result
 
 
 def main() -> None:
