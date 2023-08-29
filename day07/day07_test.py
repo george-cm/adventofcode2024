@@ -32,8 +32,7 @@ def test_solve_part1() -> None:
 
 
 def test_solve_part2() -> None:
-    # assert solve_part2(INPUT_S) ==
-    ...
+    assert solve_part2(INPUT_S) == 24933642
 
 
 if __name__ == "__main__":
