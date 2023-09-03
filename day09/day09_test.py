@@ -1,5 +1,7 @@
+import sys
+
 import pytest
-from day${day} import solve_part1, solve_part2  # type: ignore  # noqa: E402
+from day09 import solve_part1, solve_part2  # type: ignore  # noqa: E402
 
 INPUT_S: str = """"""
 
