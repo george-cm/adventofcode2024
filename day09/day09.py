@@ -14,11 +14,20 @@ class Position:
     row: int
     col: int
 
-    def __add__(self, other: Position):
+    def __add__(self, other: Position) -> Position:
         return Position(self.row + other.row, self.col + other.col)
 
-    def __sub__(self, other: Position):
+    def __sub__(self, other: Position) -> Position:
         return Position(self.row - other.row, self.col - other.col)
+
+    def _eq_(self, other: Position) -> bool:
+        return all(self.row == other.row, self.col == other.col)
+
+    def __abs__(self) -> Position:
+        return Position(abs(self.row), abs(self.col))
+
+    def __gt__(self, other: Position) -> bool:
+        return any(self.row > other.row, self.col > other.col)
 
 
 class Grid:
@@ -27,8 +36,8 @@ class Grid:
     ) -> None:
         self.rows: int = rows
         self.cols: int = cols
-        self.min_row = self.max_row = head_pos.row
-        self.min_col = self.max_col = head_pos.col
+        self.min_row = self.max_row = 5
+        self.min_col = self.max_col = 5
         self.head_pos: Position = head_pos
         self.tail_pos: Position = tail_pos
         self.tail_visited_positions: list[Position] = [self.tail_pos]
@@ -38,28 +47,45 @@ class Grid:
         print("Starting position:")
         print(self)
         print()
-        match move_instruction.split(" "):
-            case ("R", cols):
-                print("moving:")
-                cols = int(cols)
-                for _ in range(0, cols, 1):
-                    self.head_pos += Position(0, 1)
-                    self.update_grid_size()
-                    head_tail_delta = self.head_pos - self.tail_pos
-                    cols_to_add = 1 if abs(head_tail_delta.col) > 1 else 0
-                    rows_to_add = (
-                        head_tail_delta.row if abs(
-                            head_tail_delta.row) == 1 else 0
-                    )
-                    if rows_to_add or cols_to_add:
-                        self.tail_pos = self.tail_pos + Position(
-                            rows_to_add, cols_to_add
-                        )
-                        self.tail_visited_positions.append(self.tail_pos)
-                    print(self)
-                    print()
+        split_move_instruction: list[str] = move_instruction.split(" ")
+        move: tuple[str, int] = (
+            split_move_instruction[0],
+            int(split_move_instruction[1]),
+        )
+        # print(f"{move=}")
+        match move:
+            case ("R", x):
+                direction: Position = Position(0, 1)
+            case ("L", x):
+                direction: Position = Position(0, -1)
+            case ("U", x):
+                direction: Position = Position(1, 0)
+            case ("D", x):
+                direction: Position = Position(-1, 0)
             case _:
-                print("Not implemented yet\n")
+                raise NotImplementedError(
+                    f"{move_instruction=} not implemented.")
+
+        print("moving:")
+        for _ in range(x):
+            self.head_pos += direction
+            self.update_grid_size()
+            head_tail_delta = self.head_pos - self.tail_pos
+            if any(
+                (
+                    abs(head_tail_delta) == Position(1, 2),
+                    abs(head_tail_delta) == Position(2, 1),
+                    abs(head_tail_delta) == Position(0, 2),
+                    abs(head_tail_delta) == Position(2, 0),
+                )
+            ):
+                self.tail_pos += head_tail_delta - direction
+                self.tail_visited_positions.append(self.tail_pos)
+            print(self)
+            print()
+
+    def unique_tail_positions(self):
+        return set(self.tail_visited_positions)
 
     def update_grid_size(self) -> None:
         self.max_row = max(self.head_pos.row, self.max_row)
@@ -81,7 +107,15 @@ class Grid:
             f"head = {self.head_pos} -- tail = {self.tail_pos} -- detla = {head_tail_delta}"
         )
 
-    def __str__(self):
+    def visited_tail_positions(self) -> str:
+        grid: list[list[str]] = []
+        grid = [["."] * (self.max_col + 1) for _ in range(self.max_row + 1)]
+
+        for pos in self.unique_tail_positions():
+            grid[pos.row][pos.col] = "#"
+        return "\n".join([" ".join(row) for row in reversed(grid)])
+
+    def __str__(self) -> str:
         grid: list[list[str]] = []
         grid = [["."] * (self.max_col + 1) for _ in range(self.max_row + 1)]
         grid[0][0] = "s"
@@ -92,71 +126,19 @@ class Grid:
 
 
 def solve_part1(inputs: str) -> int:
-    result: int = 0
+    # result: int = 0
     # write code here, update rusult
     row: int = 0
     col: int = 0
     current_pos: Position = Position(row, col)
-    prev_head_pos: Position = current_pos
     moves: list[str] = inputs.splitlines()
     head_pos: Position = current_pos
     tail_pos: Position = current_pos
-    tail_pos_set: set[Position] = {tail_pos}
     grid = Grid(0, 0, head_pos, tail_pos)
-    print(grid)
     for move in moves:
         grid.move_head(move)
-
-        # match move.split(" "):
-        #     case ("U", y):
-        #         # row += int(y)
-        #         # current_pos = Position(row, col)
-        #         prev_head_pos = head_pos
-        #         head_pos = prev_head_pos + Position(int(y), 0)
-        #         grid.update_head_position(head_pos)
-        #         print(
-        #             f"Current pos = {prev_head_pos}, going up {y}, new position = {head_pos}"
-        #         )
-        #         print(grid)
-        #         # prev_pos = current_pos
-        #     case ("D", y):
-        #         # row -= int(y)
-        #         # current_pos = Position(row, col)
-        #         # grid.update_head_position(current_pos)
-        #         prev_head_pos = head_pos
-        #         head_pos = prev_head_pos + Position(-int(y), 0)
-        #         grid.update_head_position(head_pos)
-        #         print(
-        #             f"Current pos = {prev_head_pos}, going down {y}, new position = {head_pos}"
-        #         )
-        #         print(grid)
-        #         # prev_pos = current_pos
-        #     case ("L", x):
-        #         # col -= int(x)
-        #         # current_pos = Position(row, col)
-        #         # grid.update_head_position(current_pos)
-        #         prev_head_pos = head_pos
-        #         head_pos = prev_head_pos + Position(0, -int(x))
-        #         grid.update_head_position(head_pos)
-        #         print(
-        #             f"Current pos = {prev_head_pos}, going left {x}, new position = {head_pos}"
-        #         )
-        #         print(grid)
-        #         # prev_pos = current_pos
-        #     case ("R", x):
-        #         # col += int(x)
-        #         # current_pos = Position(row, col)
-        #         # grid.update_head_position(current_pos)
-        #         prev_head_pos = head_pos
-        #         head_pos = prev_head_pos + Position(0, int(x))
-        #         grid.update_head_position(head_pos)
-        #         print(
-        #             f"Current pos = {prev_head_pos}, going right {x}, new position = {head_pos}"
-        #         )
-        #         print(grid)
-        #         # prev_pos = current_pos
-
-    return result
+    print(grid.visited_tail_positions())
+    return len(grid.unique_tail_positions())
 
 
 def solve_part2(inputs: str) -> int:
