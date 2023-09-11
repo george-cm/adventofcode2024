@@ -13,7 +13,7 @@ R 2"""
 
 
 def test_solve_part1() -> None:
-    assert solve_part1(INPUT_S) == 13
+    assert solve_part1(INPUT_S, True) == 13
 
 
 def test_solve_part2() -> None:
