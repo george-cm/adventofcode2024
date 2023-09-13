@@ -102,20 +102,6 @@ class Grid:
         self.max_col = max(self.head_pos.col, self.max_col)
         self.min_col = min(self.head_pos.col, self.max_col)
 
-    def update_head_position(self, pos: Position) -> None:
-        self.max_row = max(pos.row, self.max_row)
-        self.min_row = min(pos.row, self.min_row)
-        self.max_col = max(pos.col, self.max_col)
-        self.min_col = min(pos.col, self.max_col)
-        self.head_pos = pos
-        head_tail_delta: Position = self.head_pos - self.tail_pos
-
-        if self.visualize:
-            print()
-            print(
-                f"head = {self.head_pos} -- tail = {self.tail_pos} -- detla = {head_tail_delta}"
-            )
-
     def visited_tail_positions(self) -> str:
         grid: list[list[str]] = []
         max_pos = self._normalize_pos(Position(self.max_row, self.max_col))
