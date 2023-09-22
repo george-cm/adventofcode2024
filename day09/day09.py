@@ -1,12 +1,14 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TypeVar
 
 from adventofcode2022.common import load_input
 
+# from typing import TypeVar
+
+
 INPUT_S: str = load_input(Path(__file__).parent / "input.txt")
 
-Position = TypeVar("Position")
+# Position = TypeVar("Position")
 
 
 @dataclass(frozen=True)
@@ -14,20 +16,20 @@ class Position:
     row: int
     col: int
 
-    def __add__(self, other: Position) -> Position:
+    def __add__(self, other: "Position") -> "Position":
         return Position(self.row + other.row, self.col + other.col)
 
-    def __sub__(self, other: Position) -> Position:
+    def __sub__(self, other: "Position") -> "Position":
         return Position(self.row - other.row, self.col - other.col)
 
-    def _eq_(self, other: Position) -> bool:
-        return all(self.row == other.row, self.col == other.col)
+    def _eq_(self, other: "Position") -> bool:
+        return all((self.row == other.row, self.col == other.col))
 
-    def __abs__(self) -> Position:
+    def __abs__(self) -> "Position":
         return Position(abs(self.row), abs(self.col))
 
-    def __gt__(self, other: Position) -> bool:
-        return any(self.row > other.row, self.col > other.col)
+    def __gt__(self, other: "Position") -> bool:
+        return any((self.row > other.row, self.col > other.col))
 
 
 class Grid:
@@ -48,12 +50,7 @@ class Grid:
         self.tail_visited_positions: list[Position] = [self.tail_pos]
         self.visualize = visualize
 
-    def move_head(self, move_instruction: str) -> None:
-        if self.visualize:
-            print(f"========= Moving {move_instruction} =========")
-            print("Starting position:")
-            print(self)
-            print()
+    def _parse_move(self, move_instruction: str) -> tuple[Position, int]:
         split_move_instruction: list[str] = move_instruction.split(" ")
         move: tuple[str, int] = (
             split_move_instruction[0],
@@ -61,21 +58,32 @@ class Grid:
         )
         if self.visualize:
             print(f"{move=}")
+        direction: Position
         match move:
-            case ("R", x):
-                direction: Position = Position(0, 1)
-            case ("L", x):
-                direction: Position = Position(0, -1)
-            case ("U", x):
-                direction: Position = Position(1, 0)
-            case ("D", x):
-                direction: Position = Position(-1, 0)
+            case ("R", steps):
+                direction = Position(0, 1)
+            case ("L", steps):
+                direction = Position(0, -1)
+            case ("U", steps):
+                direction = Position(1, 0)
+            case ("D", steps):
+                direction = Position(-1, 0)
             case _:
-                raise NotImplementedError(
-                    f"{move_instruction=} not implemented.")
+                raise NotImplementedError(f"{move_instruction=} not implemented.")
+        return direction, steps
+
+    def move_head(self, move_instruction: str) -> None:
+        if self.visualize:
+            print(f"========= Moving {move_instruction} =========")
+            print("Starting position:")
+            print(self)
+            print()
         if self.visualize:
             print("moving:")
-        for _ in range(x):
+        direction: Position
+        steps: int
+        direction, steps = self._parse_move(move_instruction)
+        for _ in range(steps):
             self.head_pos += direction
             self.update_grid_size()
             head_tail_delta = self.head_pos - self.tail_pos
