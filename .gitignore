@@ -2,5 +2,5 @@
 .vscode
 __pycache__
 .mypy_cache
-src/adventofcode2022.egg-info
+*.egg-info
 manual_format.sh

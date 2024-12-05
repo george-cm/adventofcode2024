@@ -1,5 +1,5 @@
 [tool.ruff]
-line-length = 100
+line-length = 80
 
 # Enable flake8-bugbear (`B`) rules.
 select = ["E", "F", "B"]
