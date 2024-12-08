@@ -1,60 +1,14 @@
-from itertools import permutations
+from pathlib import Path
 
-from day02 import compute_scores, decipher_pair, parse_input  # type: ignore
+from adventofcode.common import load_input
+from day02 import part1, part2  # type: ignore
 
-INPUT_S: str = """A Y
-B X
-C Z
-"""
+INPUT_S: str = load_input(Path(__file__).parent / "example.txt")
 
 
-def main() -> None:
-    msg: str = "TESTING Part1"
-    print(f"\n{'=' * len(msg)}")
-    print(msg)
-    print(f"{'-' * len(msg)}")
-
-    lines: list[str] = parse_input(INPUT_S)
-    scores: list[int] = compute_scores(lines)
-    part1_score: int = sum(scores)
-    print(lines)
-    print(scores)
-    print(part1_score)
-
-    msg = "TESTING Part2"
-    print(f"\n{'=' * len(msg)}")
-    print(msg)
-    print(f"{'-' * len(msg)}")
-
-    decipherd_pairs: list[str] = [decipher_pair(pair) for pair in lines]
-    print(decipherd_pairs)
-    deciphered_scores: list[int] = compute_scores(decipherd_pairs)
-    part2_score: int = sum(deciphered_scores)
-    print(deciphered_scores)
-    print(part2_score)
-    assert part1_score == 15
-    assert part2_score == 12
+def test_part1():
+    assert part1(INPUT_S) == 2
 
 
-def generate_rockpaperscissors_model() -> None:
-    options: dict[str, int] = {
-        "rock": 0,
-        "paper": 1,
-        "scissors": 2,
-    }
-    for comb in permutations(options.keys(), 2):
-        score: int = (options[comb[0]] - options[comb[1]]) % len(options)
-        winner: str = ""
-        if score == 0:
-            winner = "tie"
-        elif score <= 1:
-            winner = f"{comb[0]} wins (player 1)"
-        elif score > 1:
-            winner = f"{comb[1]} wins (player 2)"
-        else:
-            raise ValueError(f"Unreachable branch: {score=}")
-        print(f"{comb}: {score}, {winner}")
-
-
-if __name__ == "__main__":
-    main()
+def test_part2():
+    assert part2(INPUT_S) == 4
