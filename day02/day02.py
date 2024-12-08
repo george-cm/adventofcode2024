@@ -1,5 +1,5 @@
 from pathlib import Path
-from pprint import pprint as print
+# from pprint import pprint as print
 
 
 from adventofcode.common import load_input
