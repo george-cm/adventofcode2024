@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from adventofcode2022.common import load_input
+from adventofcode.common import load_input
 
 INPUT_S: str = load_input(Path(__file__).parent / "input.txt")
 

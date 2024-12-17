@@ -1,2 +1,0 @@
-[console_scripts]
-create_new_day = adventofcode2022.common:main

@@ -26,7 +26,7 @@ def is_safe(lower: int, upper: int, lst: list[int]) -> bool:
 
 def dampen_report(lst: list[int]) -> Generator[list[int], None, None]:
     for i in range(len(lst)):
-        yield lst[:i] + lst[i + 1 :]
+        yield lst[:i] + lst[i + 1:]
 
 
 def part1(input_s: str) -> int:
