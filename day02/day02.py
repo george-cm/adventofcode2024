@@ -29,7 +29,7 @@ def dampen_report(lst: list[int]) -> Generator[list[int], None, None]:
         yield lst[:i] + lst[i + 1:]
 
 
-def part1(input_s: str) -> int:
+def solve_part1(input_s: str) -> int:
     reports = [
         [int(level) for level in line.split()]
         for line in input_s.strip().split("\n")
@@ -37,7 +37,7 @@ def part1(input_s: str) -> int:
     return sum(map(lambda report: is_safe(1, 3, report), reports))
 
 
-def part2(input_s: str) -> int:
+def solve_part2(input_s: str) -> int:
     reports = [
         [int(level) for level in line.split()]
         for line in input_s.strip().split("\n")
@@ -54,8 +54,8 @@ def part2(input_s: str) -> int:
 
 
 def main() -> None:
-    print(f"Part1: {part1(INPUT_S)}")
-    print(f"Part2: {part2(INPUT_S)}")
+    print(f"Part1: {solve_part1(INPUT_S)}")
+    print(f"Part2: {solve_part2(INPUT_S)}")
 
 
 if __name__ == "__main__":

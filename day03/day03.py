@@ -2,7 +2,8 @@ from pathlib import Path
 
 from adventofcode.common import load_input
 
-INPUT_S: str = load_input(Path(__file__).parent / "input.txt")
+# INPUT_S: str = load_input(Path(__file__).parent / "input.txt")
+INPUT_S: str = load_input(Path(__file__).parent / "example.txt")
 
 
 def solve_part1(inputs: str) -> int:
