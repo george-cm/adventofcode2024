@@ -42,8 +42,8 @@ def create_day(day: int) -> None:
     with new_day_test_file.open("w", encoding="utf-8") as f:
         f.write(new_day_test_file_content)
 
-    new_day_problem_statement_file = new_day_fld / f"problem_day{day_str}.txt"
-    new_day_problem_statement_file.write_text("")
+    # new_day_problem_statement_file = new_day_fld / f"problem_day{day_str}.txt"
+    # new_day_problem_statement_file.write_text("")
 
     (new_day_fld / "input.txt").write_text("")
 
