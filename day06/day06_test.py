@@ -13,7 +13,7 @@ def test_solve_part1() -> None:
 
 
 def test_solve_part2() -> None:
-    assert solve_part2(INPUT_S) == 1
+    assert solve_part2(INPUT_S) == 6
 
 
 if __name__ == "__main__":
