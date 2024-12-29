@@ -6,3 +6,4 @@ __pycache__
 manual_format.sh
 example*.txt
 input*.txt
+Session.vim
