@@ -7,6 +7,7 @@ from day07 import (  # type: ignore  # noqa: E402
     parse_input,
     solve_part1,
     solve_part2,
+    combine_operators,
 )
 
 INPUT_S: str = load_input(Path(__file__).parent / "example.txt")
@@ -25,6 +26,14 @@ def test_parse_input() -> None:
         {21037: [9, 7, 18, 13]},
         {292: [11, 6, 16, 20]},
     ]
+
+
+def test_combine_operators():
+    operators = ['+', '*']
+    expected = [['+', '+'], ['+', '*'], ['*', '+'], ['*', '*']]
+    result = combine_operators(2, operators)
+    print(result)
+    assert result == expected
 
 
 def test_solve_part1() -> None:
