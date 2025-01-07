@@ -7,14 +7,14 @@ INPUT_S: str = load_input(Path(__file__).parent / "input.txt")
 
 def solve_part1(inputs: str) -> int:
     result: int = 0
-    # write code here, update rusult
+    # write code here, update result
 
     return result
 
 
 def solve_part2(inputs: str) -> int:
     result: int = 0
-    # write code here, update rusult
+    # write code here, update result
 
     return result
 
